@@ -3,10 +3,12 @@ source $VIMRUNTIME/mswin.vim
 behave mswin
 
 " call pathogen first
-call pathogen#infect()
+"call pathogen#infect()
 
-colorscheme mustang
-set guifont=Ubuntu\ Mono\ 14
+set background=dark
+"colorscheme vilight
+colorscheme solarized
+set guifont=Ubuntu\ Mono\ 15
 
 " general stuff
 
@@ -28,6 +30,7 @@ syntax on
 
 if exists("+guioptions") 
     set guioptions-=T
+    set guioptions-=m
 endif
 
 " ________________________________________________________________________
@@ -36,13 +39,11 @@ endif
 set showmode
 set showcmd
 set autoread
-set smarttab
+set nosmarttab
 set foldcolumn=2
 filetype on
 filetype indent on
 filetype plugin on
-
-autocmd FileType python setlocal omnifunc=pysmell#Complete
 
 set mouse=a
 set mousehide
@@ -50,9 +51,10 @@ map <MouseMiddle> <Esc>"*p
 
 nnoremap <M-Right> :bnext<CR>
 nnoremap <M-Left> :bprev<CR>
-nnoremap <C-M-d> :bdel<CR>
+nnoremap <Leader>d :bdel<CR>
 nnoremap <C-M-t> :TlistToggle<CR>
 nnoremap <M-o> :CommandT<CR>
+nnoremap <Leader>q :SaveSession<CR>:qall
 
 winpos 100 50
 set lines=55
@@ -115,3 +117,4 @@ let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1 
 
 let Tlist_GainFocus_On_ToggleOpen = 1
+set fdc=1

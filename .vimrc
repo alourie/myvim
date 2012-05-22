@@ -1,9 +1,6 @@
 set nocompatible
-
-" call pathogen first
-call pathogen#infect()
-
-set t_Co=256
+set encoding=utf-8
+set t_Co=16
 colorscheme mustang
 
 " general stuff
@@ -32,7 +29,6 @@ set showmode
 set showcmd
 set autoread
 set smarttab
-set foldcolumn=2
 filetype on
 filetype indent on
 filetype plugin on
@@ -48,7 +44,8 @@ nnoremap <C-M-d> :bdel<CR>
 nnoremap <C-M-t> :TlistToggle<CR>
 nnoremap <M-o> :CommandT<CR>
 nnoremap <M-l> :MRU<CR>
-nnoremap <M-q> :qall
+nnoremap <M-q> :mksession!<CR>:qall
+nnoremap <F8> :PyLint<CR>
 
 " ---------------------------------------------------------------------------
 " status line
@@ -81,6 +78,17 @@ let g:miniBufExplModSelTarget = 1
 " Gain focus on class browser on open
 let Tlist_GainFocus_On_ToggleOpen = 1
 
+" Powerline fancy
+" "let g:Powerline_symbols = 'fancy'
+
+" Don't run pylint on each save
+let g:pymode_lint_write = 0
+let g:pymode_options_fold = 0
+
+" Session Settings
+let g:session_autosave = 1
+let g:session_autoload = 1
+
 " Vam setup
 fun! SetupVAM()
       " YES, you can customize this vam_install_path path and everything still works!
@@ -104,7 +112,16 @@ fun! SetupVAM()
       " be installed form www.vim.org. Lookup MergeSources to get more control
       " let g:vim_addon_manager['drop_git_sources'] = !executable('git')
 
-      call vam#ActivateAddons(['snipmate-snippets', 'github:tpope/vim-surround'], {'auto_install' : 0})
+      call vam#ActivateAddons(['snipmate-snippets',
+                  \         'github:tpope/vim-surround',
+                  \         'github:Lokaltog/vim-powerline',
+                  \         'github:jiangmiao/auto-pairs',
+                  \         'github:scrooloose/syntastic',
+                  \         'github:klen/python-mode',
+                  \         'github:xolox/vim-session',
+                  \         'github:altercation/vim-colors-solarized',
+                  \         'github:tpope/vim-fugitive',
+                  \          ], {'auto_install' : 0})
       " sample: call vam#ActivateAddons(['pluginA','pluginB', ...], {'auto_install' : 0})
       "  - look up source from pool (<c-x><c-p> complete plugin names):
       "    ActivateAddons(["foo",  ..
