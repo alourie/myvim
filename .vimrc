@@ -1,6 +1,10 @@
+" Automatic reloading of .vimrc
+autocmd! bufwritepost .vimrc source %"
+autocmd! bufwritepost .gvimrc source %"
+
 set nocompatible
 set encoding=utf-8
-set t_Co=16
+set t_Co=256
 colorscheme mustang
 
 " general stuff
@@ -37,14 +41,19 @@ filetype plugin on
 autocmd FileType python setlocal omnifunc=pysmell#Complete
 set completeopt=menuone,longest,preview
 
+vnoremap < <gv
+vnoremap > >gv
+
+map bz https://bugzilla.redhat.com/
+
 " Some mappings
 nnoremap <M-Right> :bnext<CR>
 nnoremap <M-Left> :bprev<CR>
-nnoremap <C-M-d> :bdel<CR>
+nnoremap <Leader>d :bdel<CR>
 nnoremap <C-M-t> :TlistToggle<CR>
-nnoremap <M-o> :CommandT<CR>
-nnoremap <M-l> :MRU<CR>
-nnoremap <M-q> :mksession!<CR>:qall
+nnoremap <M-o> :CtrlP<CR>
+nnoremap <Leader>q :qall
+nnoremap <M-l> :CtrlPMRU<CR>
 nnoremap <F8> :PyLint<CR>
 
 " ---------------------------------------------------------------------------
@@ -79,15 +88,11 @@ let g:miniBufExplModSelTarget = 1
 let Tlist_GainFocus_On_ToggleOpen = 1
 
 " Powerline fancy
-" "let g:Powerline_symbols = 'fancy'
+"let g:Powerline_symbols = 'fancy'
 
 " Don't run pylint on each save
 let g:pymode_lint_write = 0
 let g:pymode_options_fold = 0
-
-" Session Settings
-let g:session_autosave = 1
-let g:session_autoload = 1
 
 " Vam setup
 fun! SetupVAM()
@@ -113,15 +118,20 @@ fun! SetupVAM()
       " let g:vim_addon_manager['drop_git_sources'] = !executable('git')
 
       call vam#ActivateAddons(['snipmate-snippets',
-                  \         'github:tpope/vim-surround',
                   \         'github:Lokaltog/vim-powerline',
                   \         'github:jiangmiao/auto-pairs',
                   \         'github:scrooloose/syntastic',
                   \         'github:klen/python-mode',
-                  \         'github:xolox/vim-session',
                   \         'github:altercation/vim-colors-solarized',
                   \         'github:tpope/vim-fugitive',
-                  \          ], {'auto_install' : 0})
+                  \         'github:fs111/pydoc.vim',
+                  \         'github:davidhalter/jedi-vim',
+                  \         'github:vim-scripts/taglist.vim.git',
+                  \         'github:vim-scripts/TaskList.vim.git',
+                  \         'github:vim-scripts/AutoComplPop.git',
+                  \         'github:fholgado/minibufexpl.vim.git',
+                  \         'github:kien/ctrlp.vim.git',
+                  \          ], {'auto_install' : 1})
       " sample: call vam#ActivateAddons(['pluginA','pluginB', ...], {'auto_install' : 0})
       "  - look up source from pool (<c-x><c-p> complete plugin names):
       "    ActivateAddons(["foo",  ..
