@@ -44,7 +44,7 @@ set completeopt=menuone,longest,preview
 vnoremap < <gv
 vnoremap > >gv
 
-map bz https://bugzilla.redhat.com/
+ab bz Bug-Url: https://bugzilla.redhat.com
 
 " Some mappings
 nnoremap <M-Right> :bnext<CR>
