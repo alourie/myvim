@@ -4,8 +4,6 @@ autocmd! bufwritepost .gvimrc source %"
 
 set nocompatible
 set encoding=utf-8
-set t_Co=256
-colorscheme mustang
 
 " general stuff
 
@@ -22,6 +20,9 @@ set noswapfile
 
 
 " initialise formatting
+
+" Don't fold on start
+set nofoldenable
 
 set number
 set autoindent smartindent
@@ -47,12 +48,14 @@ vnoremap > >gv
 ab bz Bug-Url: https://bugzilla.redhat.com
 
 " Some mappings
+nnoremap <Leader>n :bnext<CR>
+nnoremap <Leader>b :bprev<CR>
+nnoremap <Leader>d :bdel<CR>
+nnoremap <Leader>q :bdel!
 nnoremap <M-Right> :bnext<CR>
 nnoremap <M-Left> :bprev<CR>
-nnoremap <Leader>d :bdel<CR>
 nnoremap <C-M-t> :TlistToggle<CR>
 nnoremap <M-o> :CtrlP<CR>
-nnoremap <Leader>q :qall
 nnoremap <M-l> :CtrlPMRU<CR>
 nnoremap <F8> :PyLint<CR>
 
@@ -155,6 +158,7 @@ fun! SetupVAM()
               \         'github:vim-scripts/AutoComplPop.git',
               \         'github:fholgado/minibufexpl.vim.git',
               \         'github:kien/ctrlp.vim.git',
+              \         'github:vim-scripts/Efficient-python-folding.git',
               \          ], {'auto_install' : 1})
   " sample: call vam#ActivateAddons(['pluginA','pluginB', ...], {'auto_install' : 0})
 
@@ -180,3 +184,26 @@ call SetupVAM()
 " option2:  au GUIEnter * call SetupVAM()
 " See BUGS sections below [*]
 " Vim 7.0 users see BUGS section [3]
+
+" Colors are set here, because we only bring them in SetupVAM
+set t_Co=256
+set background=dark
+if !has("gui_running")
+    set hlsearch
+    let g:solarized_termcolors=16
+else
+    set guifont=Ubuntu\ Mono\ 14
+    set guioptions-=T
+    set guioptions-=m
+
+    set mouse=a
+    set mousehide
+    map <MouseMiddle> <Esc>"*p
+
+    winpos 100 50
+    set lines=55
+    set columns=200
+endif
+
+"colorscheme mustang
+colorscheme solarized

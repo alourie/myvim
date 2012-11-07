@@ -1,0 +1,40 @@
+[global_config]
+  title_transmit_bg_color = "#d30102"
+  focus = system
+[keybindings]
+[profiles]
+  [[default]]
+    copy_on_selection = True
+    use_system_font = False
+    font = Ubuntu Mono 14
+    scrollback_infinite = True
+    foreground_color = "#c9dae2"
+  [[solarized-dark]]
+    palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
+    font = Ubuntu Mono 14
+    use_system_font = False
+    cursor_color = "#e0dac8"
+    foreground_color = "#b0c8ca"
+    show_titlebar = False
+    copy_on_selection = True
+    background_color = "#002b36"
+    scrollback_infinite = True
+  [[solarized-light]]
+    palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
+    font = Ubuntu Mono 14
+    use_system_font = False
+    cursor_color = "#002b36"
+    foreground_color = "#002b36"
+    copy_on_selection = True
+    background_color = "#eee8d5"
+    scrollback_infinite = True
+[layouts]
+  [[default]]
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+      profile = solarized-dark
+    [[[window0]]]
+      type = Window
+      parent = ""
+[plugins]
