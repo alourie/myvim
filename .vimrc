@@ -156,9 +156,11 @@ fun! SetupVAM()
               \         'github:vim-scripts/taglist.vim.git',
               \         'github:vim-scripts/TaskList.vim.git',
               \         'github:vim-scripts/AutoComplPop.git',
+              \         'github:vim-scripts/ScrollColors.git',
               \         'github:fholgado/minibufexpl.vim.git',
               \         'github:kien/ctrlp.vim.git',
               \         'github:vim-scripts/Efficient-python-folding.git',
+              \         'github:godlygeek/csapprox.git',
               \          ], {'auto_install' : 1})
   " sample: call vam#ActivateAddons(['pluginA','pluginB', ...], {'auto_install' : 0})
 
@@ -191,6 +193,7 @@ set background=dark
 if !has("gui_running")
     set hlsearch
     let g:solarized_termcolors=16
+    colorscheme lucius
 else
     set guifont=Ubuntu\ Mono\ 14
     set guioptions-=T
@@ -203,7 +206,8 @@ else
     winpos 100 50
     set lines=55
     set columns=200
+    colorscheme solarized
 endif
 
 "colorscheme mustang
-colorscheme solarized
+""colorscheme solarized
