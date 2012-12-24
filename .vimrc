@@ -1,6 +1,5 @@
 " Automatic reloading of .vimrc
 autocmd! bufwritepost .vimrc source %"
-autocmd! bufwritepost .gvimrc source %"
 
 set nocompatible
 set encoding=utf-8
@@ -8,6 +7,7 @@ set encoding=utf-8
 " general stuff
 
 set incsearch
+set hlsearch
 set ignorecase
 set smartcase
 set history=100
@@ -25,7 +25,7 @@ set noswapfile
 set nofoldenable
 
 set number
-set autoindent smartindent
+set autoindent
 syntax on
 
 " Other stuff
@@ -38,25 +38,26 @@ filetype on
 filetype indent on
 filetype plugin on
 
+set list
+set listchars+=eol:¬
+
 " Enable python omnicompletion (Requires PYSMELLTAGS)
-autocmd FileType python setlocal omnifunc=pysmell#Complete
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 set completeopt=menuone,longest,preview
 
 vnoremap < <gv
 vnoremap > >gv
 
-ab bz Bug-Url: https://bugzilla.redhat.com
-
 " Some mappings
-nnoremap <Leader>n :bnext<CR>
-nnoremap <Leader>b :bprev<CR>
+map <Leader>n :set number!<CR>
+nnoremap <Leader>l :set list!<CR>
 nnoremap <Leader>d :bdel<CR>
-nnoremap <Leader>q :bdel!
+nnoremap <Leader>q :qall!
 nnoremap <M-Right> :bnext<CR>
 nnoremap <M-Left> :bprev<CR>
+nnoremap <silent> <F4> :bnext<CR>
+nnoremap <silent> <F3> :bprev<CR>
 nnoremap <C-M-t> :TlistToggle<CR>
-nnoremap <M-o> :CtrlP<CR>
-nnoremap <M-l> :CtrlPMRU<CR>
 nnoremap <F8> :PyLint<CR>
 
 " ---------------------------------------------------------------------------
@@ -82,10 +83,10 @@ if has('statusline')
 endif
 
 " MiniBufExpl setup
-let g:miniBufExplMapWindowNavVim = 1 
-let g:miniBufExplMapWindowNavArrows = 1 
-let g:miniBufExplMapCTabSwitchBufs = 1 
-let g:miniBufExplModSelTarget = 1 
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplMapWindowNavArrows = 1
+let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplModSelTarget = 1
 
 " Gain focus on class browser on open
 let Tlist_GainFocus_On_ToggleOpen = 1
@@ -96,6 +97,9 @@ let Tlist_GainFocus_On_ToggleOpen = 1
 " Don't run pylint on each save
 let g:pymode_lint_write = 0
 let g:pymode_options_fold = 0
+
+" Disable Rope
+let g:pymode_rope = 0
 
 fun! EnsureVamIsOnDisk(vam_install_path)
   " windows users may want to use http://mawercer.de/~marc/vam/index.php
@@ -115,7 +119,7 @@ fun! EnsureVamIsOnDisk(vam_install_path)
                   \"time ask maintainers to improve documentation")
       call mkdir(a:vam_install_path, 'p')
       execute '!git clone --depth=1 git://github.com/MarcWeber/vim-addon-manager '.shellescape(a:vam_install_path, 1).'/vim-addon-manager'
-      " VAM runs helptags automatically when you install or update 
+      " VAM runs helptags automatically when you install or update
       " plugins
       exec 'helptags '.fnameescape(a:vam_install_path.'/vim-addon-manager/doc')
     endif
@@ -145,23 +149,24 @@ fun! SetupVAM()
 
   " Tell VAM which plugins to fetch & load:
   call vam#ActivateAddons(['snipmate-snippets',
+              \         'github:klen/python-mode',
               \         'github:Lokaltog/vim-powerline',
               \         'github:jiangmiao/auto-pairs',
-              \         'github:scrooloose/syntastic',
-              \         'github:klen/python-mode',
               \         'github:altercation/vim-colors-solarized',
               \         'github:tpope/vim-fugitive',
+              \         'github:fholgado/minibufexpl.vim.git',
+              \         'github:scrooloose/syntastic',
               \         'github:fs111/pydoc.vim',
-              \         'github:davidhalter/jedi-vim',
               \         'github:vim-scripts/taglist.vim.git',
               \         'github:vim-scripts/TaskList.vim.git',
               \         'github:vim-scripts/AutoComplPop.git',
               \         'github:vim-scripts/ScrollColors.git',
-              \         'github:fholgado/minibufexpl.vim.git',
               \         'github:kien/ctrlp.vim.git',
               \         'github:vim-scripts/Efficient-python-folding.git',
-              \         'github:godlygeek/csapprox.git',
+              \         'github:nvie/vim-flake8',
+              \         'github:davidhalter/jedi-vim',
               \          ], {'auto_install' : 1})
+  ""            \         'github:alourie/Conque-Shell.git',
   " sample: call vam#ActivateAddons(['pluginA','pluginB', ...], {'auto_install' : 0})
 
   " Addons are put into vam_install_path/plugin-name directory
@@ -191,9 +196,9 @@ call SetupVAM()
 set t_Co=256
 set background=dark
 if !has("gui_running")
-    set hlsearch
-    let g:solarized_termcolors=16
-    colorscheme lucius
+    set t_Co=16
+    colorscheme solarized
+    ""colorscheme distinguished
 else
     set guifont=Ubuntu\ Mono\ 14
     set guioptions-=T
@@ -208,6 +213,3 @@ else
     set columns=200
     colorscheme solarized
 endif
-
-"colorscheme mustang
-""colorscheme solarized
