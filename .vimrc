@@ -1,8 +1,14 @@
 " Automatic reloading of .vimrc
 autocmd! bufwritepost .vimrc source %"
 
+" Python-specific stuff
+autocmd FileType python set cc=79
+
 set nocompatible
 set encoding=utf-8
+set scrolloff=1
+set sidescrolloff=5
+set display+=lastline
 
 " general stuff
 
@@ -38,15 +44,24 @@ filetype on
 filetype indent on
 filetype plugin on
 
-set list
 set listchars+=eol:¬
 
 " Enable python omnicompletion (Requires PYSMELLTAGS)
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+"autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 set completeopt=menuone,longest,preview
 
 vnoremap < <gv
 vnoremap > >gv
+
+" For some reason home and end keys are not mapping properly.
+" Home key
+imap <esc>OH <esc>0i
+cmap <esc>OH <home>
+nmap <esc>OH 0
+" End key
+nmap <esc>OF $
+imap <esc>OF <esc>$a
+cmap <esc>OF <end>
 
 " Some mappings
 map <Leader>n :set number!<CR>
@@ -59,6 +74,28 @@ nnoremap <silent> <F4> :bnext<CR>
 nnoremap <silent> <F3> :bprev<CR>
 nnoremap <C-M-t> :TlistToggle<CR>
 nnoremap <F8> :PyLint<CR>
+nnoremap :W :w
+nnoremap :Q :q
+
+" Tell vim to remember certain things when we exit
+"  '10  :  marks will be remembered for up to 10 previously edited files
+"  "100 :  will save up to 100 lines for each register
+"  :20  :  up to 20 lines of command-line history will be remembered
+"  %    :  saves and restores the buffer list
+"  n... :  where to save the viminfo files
+set viminfo='10,\"100,:20,%,n~/.viminfo
+function! ResCur()
+  if line("'\"") <= line("$")
+    normal! g`"
+    return 1
+  endif
+endfunction
+
+augroup resCur
+  autocmd!
+  autocmd BufWinEnter * call ResCur()
+augroup END
+
 
 " ---------------------------------------------------------------------------
 " status line
@@ -91,15 +128,22 @@ let g:miniBufExplModSelTarget = 1
 " Gain focus on class browser on open
 let Tlist_GainFocus_On_ToggleOpen = 1
 
-" Powerline fancy
+" Powerline stuff
 "let g:Powerline_symbols = 'fancy'
 
 " Don't run pylint on each save
 let g:pymode_lint_write = 0
+
+" Disable folding by default
 let g:pymode_options_fold = 0
 
 " Disable Rope
 let g:pymode_rope = 0
+
+" Jedi stuff
+let g:jedi#use_tabs_not_buffers = 0
+let g:jedi#popup_on_dot = 0
+let g:jedi#popup_select_first = 0
 
 fun! EnsureVamIsOnDisk(vam_install_path)
   " windows users may want to use http://mawercer.de/~marc/vam/index.php
@@ -156,15 +200,16 @@ fun! SetupVAM()
               \         'github:tpope/vim-fugitive',
               \         'github:fholgado/minibufexpl.vim.git',
               \         'github:scrooloose/syntastic',
+              \         'github:scrooloose/nerdtree',
               \         'github:fs111/pydoc.vim',
               \         'github:vim-scripts/taglist.vim.git',
               \         'github:vim-scripts/TaskList.vim.git',
-              \         'github:vim-scripts/AutoComplPop.git',
               \         'github:vim-scripts/ScrollColors.git',
               \         'github:kien/ctrlp.vim.git',
               \         'github:vim-scripts/Efficient-python-folding.git',
               \         'github:nvie/vim-flake8',
               \         'github:davidhalter/jedi-vim',
+              \         'github:vim-scripts/AutoComplPop.git',
               \          ], {'auto_install' : 1})
   ""            \         'github:alourie/Conque-Shell.git',
   " sample: call vam#ActivateAddons(['pluginA','pluginB', ...], {'auto_install' : 0})
@@ -196,20 +241,24 @@ call SetupVAM()
 set t_Co=256
 set background=dark
 if !has("gui_running")
-    set t_Co=16
+    ""set t_Co=16
+    "colorscheme distinguished
     colorscheme solarized
-    ""colorscheme distinguished
 else
-    set guifont=Ubuntu\ Mono\ 14
     set guioptions-=T
     set guioptions-=m
+    set guioptions-=r
+    set guifont=Droid\ Sans\ Mono\ 11
 
     set mouse=a
     set mousehide
     map <MouseMiddle> <Esc>"*p
 
     winpos 100 50
-    set lines=55
-    set columns=200
+    set lines=50
+    set columns=150
     colorscheme solarized
 endif
+
+" Custom stuff
+source ~/.vimrc_redhat
