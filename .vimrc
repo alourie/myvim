@@ -16,9 +16,11 @@ set incsearch
 set hlsearch
 set ignorecase
 set smartcase
+set smartindent
 set history=100
 set shiftwidth=4
 set tabstop=4
+set shiftround
 set expandtab
 set hidden
 set nobackup
@@ -55,13 +57,13 @@ vnoremap > >gv
 
 " For some reason home and end keys are not mapping properly.
 " Home key
-imap <esc>OH <esc>0i
-cmap <esc>OH <home>
-nmap <esc>OH 0
-" End key
-nmap <esc>OF $
-imap <esc>OF <esc>$a
-cmap <esc>OF <end>
+"imap <esc>OH <esc>0i
+"cmap <esc>OH <home>
+"nmap <esc>OH 0
+"" End key
+"nmap <esc>OF $
+"imap <esc>OF <esc>$a
+"cmap <esc>OF <end>
 
 " Some mappings
 map <Leader>n :set number!<CR>
@@ -131,19 +133,33 @@ let Tlist_GainFocus_On_ToggleOpen = 1
 " Powerline stuff
 "let g:Powerline_symbols = 'fancy'
 
-" Don't run pylint on each save
-let g:pymode_lint_write = 0
+" Disable pymode plugin #TESTING!!!
+"let g:pymode = 0
 
-" Disable folding by default
-let g:pymode_options_fold = 0
-
-" Disable Rope
-let g:pymode_rope = 0
+" Autoremove unused whitespaces
+"let g:pymode_utils_whitespaces = 1
+"
+"" Don't run pylint on each save
+"let g:pymode_lint_write = 0
+"
+"" Disable folding by default
+"let g:pymode_options_fold = 0
+"
+"" Disable Rope
+"let g:pymode_rope = 0
 
 " Jedi stuff
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#popup_on_dot = 0
 let g:jedi#popup_select_first = 0
+
+" Sane Ignore For ctrlp
+let g:ctrlp_working_mode = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|\./build-tools-root\|\./config\|\./ear\|\./frontend\|\./setup$',
+  \ 'file': '\.java\|\.pyc$'
+  \ }
 
 fun! EnsureVamIsOnDisk(vam_install_path)
   " windows users may want to use http://mawercer.de/~marc/vam/index.php
@@ -193,7 +209,6 @@ fun! SetupVAM()
 
   " Tell VAM which plugins to fetch & load:
   call vam#ActivateAddons(['snipmate-snippets',
-              \         'github:klen/python-mode',
               \         'github:Lokaltog/vim-powerline',
               \         'github:jiangmiao/auto-pairs',
               \         'github:altercation/vim-colors-solarized',
@@ -210,7 +225,9 @@ fun! SetupVAM()
               \         'github:nvie/vim-flake8',
               \         'github:davidhalter/jedi-vim',
               \         'github:vim-scripts/AutoComplPop.git',
+              \         'github:hynek/vim-python-pep8-indent',
               \          ], {'auto_install' : 1})
+              "\         'github:klen/python-mode',
   ""            \         'github:alourie/Conque-Shell.git',
   " sample: call vam#ActivateAddons(['pluginA','pluginB', ...], {'auto_install' : 0})
 
@@ -254,9 +271,8 @@ else
     set mousehide
     map <MouseMiddle> <Esc>"*p
 
-    winpos 100 50
-    set lines=50
-    set columns=150
+    set lines=45
+    set columns=110
     colorscheme solarized
 endif
 
