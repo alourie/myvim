@@ -25,6 +25,7 @@ set expandtab
 set hidden
 set nobackup
 set noswapfile
+set undofile
 
 
 " initialise formatting
@@ -68,7 +69,7 @@ vnoremap > >gv
 " Some mappings
 map <Leader>n :set number!<CR>
 nnoremap <Leader>l :set list!<CR>
-nnoremap <Leader>d :bdel<CR>
+nnoremap <Leader>d :MBEbd<CR>
 nnoremap <Leader>q :qall!
 nnoremap <M-Right> :bnext<CR>
 nnoremap <M-Left> :bprev<CR>
@@ -78,6 +79,12 @@ nnoremap <C-M-t> :TlistToggle<CR>
 nnoremap <F8> :PyLint<CR>
 nnoremap :W :w
 nnoremap :Q :q
+nnoremap <PAGEUP> <C-u>
+nnoremap <PAGEDOWN> <C-d>
+map <C-Down> <C-W>j
+map <C-Up> <C-W>k
+map <C-Right> <C-W>h
+map <C-Left> <C-W>l
 
 " Tell vim to remember certain things when we exit
 "  '10  :  marks will be remembered for up to 10 previously edited files
@@ -152,6 +159,7 @@ let Tlist_GainFocus_On_ToggleOpen = 1
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#popup_on_dot = 0
 let g:jedi#popup_select_first = 0
+let g:jedi#get_definition_command = "<leader>g"
 
 " Sane Ignore For ctrlp
 let g:ctrlp_working_mode = 'CtrlP'
@@ -219,7 +227,6 @@ fun! SetupVAM()
               \         'github:fs111/pydoc.vim',
               \         'github:vim-scripts/taglist.vim.git',
               \         'github:vim-scripts/TaskList.vim.git',
-              \         'github:vim-scripts/ScrollColors.git',
               \         'github:kien/ctrlp.vim.git',
               \         'github:vim-scripts/Efficient-python-folding.git',
               \         'github:nvie/vim-flake8',
@@ -229,6 +236,7 @@ fun! SetupVAM()
               \          ], {'auto_install' : 1})
               "\         'github:klen/python-mode',
   ""            \         'github:alourie/Conque-Shell.git',
+"              \         'github:vim-scripts/ScrollColors.git',
   " sample: call vam#ActivateAddons(['pluginA','pluginB', ...], {'auto_install' : 0})
 
   " Addons are put into vam_install_path/plugin-name directory
