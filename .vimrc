@@ -3,6 +3,7 @@ autocmd! bufwritepost .vimrc source %"
 
 " Python-specific stuff
 autocmd FileType python set cc=79
+autocmd BufWritePre *.py :%s/\s\+$//e
 
 set nocompatible
 set encoding=utf-8
@@ -48,6 +49,7 @@ filetype indent on
 filetype plugin on
 
 set listchars+=eol:¬
+set backspace=indent,eol,start
 
 " Enable python omnicompletion (Requires PYSMELLTAGS)
 "autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
@@ -83,7 +85,7 @@ nnoremap <PAGEUP> <C-u>
 nnoremap <PAGEDOWN> <C-d>
 map <C-Down> <C-W>j
 map <C-Up> <C-W>k
-map <C-Right> <C-W>h
+map <C-Right> <C-W>l
 map <C-Left> <C-W>l
 
 " Tell vim to remember certain things when we exit
@@ -140,21 +142,6 @@ let Tlist_GainFocus_On_ToggleOpen = 1
 " Powerline stuff
 "let g:Powerline_symbols = 'fancy'
 
-" Disable pymode plugin #TESTING!!!
-"let g:pymode = 0
-
-" Autoremove unused whitespaces
-"let g:pymode_utils_whitespaces = 1
-"
-"" Don't run pylint on each save
-"let g:pymode_lint_write = 0
-"
-"" Disable folding by default
-"let g:pymode_options_fold = 0
-"
-"" Disable Rope
-"let g:pymode_rope = 0
-
 " Jedi stuff
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#popup_on_dot = 0
@@ -166,7 +153,7 @@ let g:ctrlp_working_mode = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\.git$\|\./build-tools-root\|\./config\|\./ear\|\./frontend\|\./setup$',
-  \ 'file': '\.java\|\.pyc$'
+  \ 'file': '\.java\|\.jpeg|\.png|\.pyc|\.jar$'
   \ }
 
 fun! EnsureVamIsOnDisk(vam_install_path)
@@ -231,10 +218,12 @@ fun! SetupVAM()
               \         'github:vim-scripts/Efficient-python-folding.git',
               \         'github:nvie/vim-flake8',
               \         'github:davidhalter/jedi-vim',
-              \         'github:vim-scripts/AutoComplPop.git',
               \         'github:hynek/vim-python-pep8-indent',
+              \         'github:Valloric/YouCompleteMe',
+              \         'github:ardagnir/united-front',
               \          ], {'auto_install' : 1})
               "\         'github:klen/python-mode',
+              "\         'github:vim-scripts/AutoComplPop.git',
   ""            \         'github:alourie/Conque-Shell.git',
 "              \         'github:vim-scripts/ScrollColors.git',
   " sample: call vam#ActivateAddons(['pluginA','pluginB', ...], {'auto_install' : 0})
