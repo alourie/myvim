@@ -71,7 +71,7 @@ vnoremap > >gv
 " Some mappings
 map <Leader>n :set number!<CR>
 nnoremap <Leader>l :set list!<CR>
-nnoremap <Leader>d :MBEbd<CR>
+nnoremap <Leader>D :MBEbd<CR>
 nnoremap <Leader>q :qall!
 nnoremap <M-Right> :bnext<CR>
 nnoremap <M-Left> :bprev<CR>
@@ -86,7 +86,7 @@ nnoremap <PAGEDOWN> <C-d>
 map <C-Down> <C-W>j
 map <C-Up> <C-W>k
 map <C-Right> <C-W>l
-map <C-Left> <C-W>l
+map <C-Left> <C-W>h
 
 " Tell vim to remember certain things when we exit
 "  '10  :  marks will be remembered for up to 10 previously edited files
@@ -146,7 +146,7 @@ let Tlist_GainFocus_On_ToggleOpen = 1
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#popup_on_dot = 0
 let g:jedi#popup_select_first = 0
-let g:jedi#get_definition_command = "<leader>g"
+let g:jedi#goto_definition_command = "<leader>g"
 
 " Sane Ignore For ctrlp
 let g:ctrlp_working_mode = 'CtrlP'
@@ -208,24 +208,24 @@ fun! SetupVAM()
               \         'github:jiangmiao/auto-pairs',
               \         'github:altercation/vim-colors-solarized',
               \         'github:tpope/vim-fugitive',
-              \         'github:fholgado/minibufexpl.vim.git',
+              \         'github:fholgado/minibufexpl.vim',
               \         'github:scrooloose/syntastic',
               \         'github:scrooloose/nerdtree',
               \         'github:fs111/pydoc.vim',
-              \         'github:vim-scripts/taglist.vim.git',
-              \         'github:vim-scripts/TaskList.vim.git',
-              \         'github:kien/ctrlp.vim.git',
-              \         'github:vim-scripts/Efficient-python-folding.git',
+              \         'github:vim-scripts/taglist.vim',
+              \         'github:vim-scripts/TaskList.vim',
+              \         'github:kien/ctrlp.vim',
+              \         'github:vim-scripts/Efficient-python-folding',
               \         'github:nvie/vim-flake8',
               \         'github:davidhalter/jedi-vim',
               \         'github:hynek/vim-python-pep8-indent',
-              \         'github:Valloric/YouCompleteMe',
+              \         'github:vim-scripts/AutoComplPop',
               \         'github:ardagnir/united-front',
               \          ], {'auto_install' : 1})
               "\         'github:klen/python-mode',
-              "\         'github:vim-scripts/AutoComplPop.git',
-  ""            \         'github:alourie/Conque-Shell.git',
-"              \         'github:vim-scripts/ScrollColors.git',
+  ""            \         'github:alourie/Conque-Shell',
+              "\         'github:Valloric/YouCompleteMe',
+"              \         'github:vim-scripts/ScrollColors',
   " sample: call vam#ActivateAddons(['pluginA','pluginB', ...], {'auto_install' : 0})
 
   " Addons are put into vam_install_path/plugin-name directory
