@@ -3,7 +3,7 @@ autocmd! bufwritepost .vimrc source %"
 
 " Python-specific stuff
 autocmd FileType python set cc=79
-autocmd BufWritePre *.py :%s/\s\+$//e
+"autocmd BufWritePre *.py :%s/\s\+$//e
 
 set nocompatible
 set encoding=utf-8
@@ -51,8 +51,6 @@ filetype plugin on
 set listchars+=eol:¬
 set backspace=indent,eol,start
 
-" Enable python omnicompletion (Requires PYSMELLTAGS)
-"autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 set completeopt=menuone,longest,preview
 
 vnoremap < <gv
@@ -73,10 +71,8 @@ map <Leader>n :set number!<CR>
 nnoremap <Leader>l :set list!<CR>
 nnoremap <Leader>D :MBEbd<CR>
 nnoremap <Leader>q :qall!
-nnoremap <M-Right> :bnext<CR>
-nnoremap <M-Left> :bprev<CR>
-nnoremap <silent> <F4> :bnext<CR>
-nnoremap <silent> <F3> :bprev<CR>
+nnoremap <M-l> :bnext<CR>
+nnoremap <M-h> :bprev<CR>
 nnoremap <C-M-t> :TlistToggle<CR>
 nnoremap <F8> :PyLint<CR>
 nnoremap :W :w
@@ -152,9 +148,13 @@ let g:jedi#goto_definition_command = "<leader>g"
 let g:ctrlp_working_mode = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|\./build-tools-root\|\./config\|\./ear\|\./frontend\|\./setup$',
-  \ 'file': '\.java\|\.jpeg|\.png|\.pyc|\.jar$'
+  \ 'file': '\v\.(java|jpeg|png|pyc|jar)$',
   \ }
+
+" Syntastic
+let g:syntastic_enable_signs = 1
+let g:syntastic_enable_highlighting = 1
+let g:syntastic_auto_jump = 0
 
 fun! EnsureVamIsOnDisk(vam_install_path)
   " windows users may want to use http://mawercer.de/~marc/vam/index.php
@@ -203,11 +203,12 @@ fun! SetupVAM()
   exec 'set runtimepath+='.vam_install_path.'/vim-addon-manager'
 
   " Tell VAM which plugins to fetch & load:
-  call vam#ActivateAddons(['snipmate-snippets',
+  call vam#ActivateAddons([
               \         'github:Lokaltog/vim-powerline',
               \         'github:jiangmiao/auto-pairs',
               \         'github:altercation/vim-colors-solarized',
               \         'github:tpope/vim-fugitive',
+              \         'github:tpope/vim-unimpaired',
               \         'github:fholgado/minibufexpl.vim',
               \         'github:scrooloose/syntastic',
               \         'github:scrooloose/nerdtree',
@@ -218,13 +219,15 @@ fun! SetupVAM()
               \         'github:vim-scripts/Efficient-python-folding',
               \         'github:nvie/vim-flake8',
               \         'github:davidhalter/jedi-vim',
+              \         'github:Valloric/YouCompleteMe',
               \         'github:hynek/vim-python-pep8-indent',
-              \         'github:vim-scripts/AutoComplPop',
               \         'github:ardagnir/united-front',
+              \         'github:terryma/vim-multiple-cursors',
               \          ], {'auto_install' : 1})
+              "\         'snipmate-snippets',
               "\         'github:klen/python-mode',
-  ""            \         'github:alourie/Conque-Shell',
-              "\         'github:Valloric/YouCompleteMe',
+              "\         'github:alourie/Conque-Shell',
+              "\         'github:vim-scripts/AutoComplPop',
 "              \         'github:vim-scripts/ScrollColors',
   " sample: call vam#ActivateAddons(['pluginA','pluginB', ...], {'auto_install' : 0})
 
@@ -262,7 +265,7 @@ else
     set guioptions-=T
     set guioptions-=m
     set guioptions-=r
-    set guifont=Droid\ Sans\ Mono\ 11
+    set guifont=Droid\ Sans\ Mono\ 14
 
     set mouse=a
     set mousehide
@@ -272,6 +275,3 @@ else
     set columns=110
     colorscheme solarized
 endif
-
-" Custom stuff
-source ~/.vimrc_redhat
