@@ -1,5 +1,8 @@
 " Automatic reloading of .vimrc
 autocmd! bufwritepost .vimrc source %"
+autocmd! bufwritepost .zshrc source %"
+au InsertLeave * set nopaste
+au VimResized * exe "normal! \<c-w>="
 
 " Python-specific stuff
 autocmd FileType python set cc=79
@@ -10,6 +13,7 @@ set encoding=utf-8
 set scrolloff=1
 set sidescrolloff=5
 set display+=lastline
+set clipboard=unnamed
 
 " general stuff
 
@@ -67,12 +71,11 @@ vnoremap > >gv
 "cmap <esc>OF <end>
 
 " Some mappings
+let mapleader = ","
 map <Leader>n :set number!<CR>
 nnoremap <Leader>l :set list!<CR>
 nnoremap <Leader>D :MBEbd<CR>
 nnoremap <Leader>q :qall!
-nnoremap <M-l> :bnext<CR>
-nnoremap <M-h> :bprev<CR>
 nnoremap <C-M-t> :TlistToggle<CR>
 nnoremap <F8> :PyLint<CR>
 nnoremap :W :w
@@ -83,6 +86,17 @@ map <C-Down> <C-W>j
 map <C-Up> <C-W>k
 map <C-Right> <C-W>l
 map <C-Left> <C-W>h
+
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+nnoremap <left> :bnext<CR>
+nnoremap <right> :bprev<CR>
 
 " Tell vim to remember certain things when we exit
 "  '10  :  marks will be remembered for up to 10 previously edited files
@@ -218,7 +232,6 @@ fun! SetupVAM()
               \         'github:kien/ctrlp.vim',
               \         'github:vim-scripts/Efficient-python-folding',
               \         'github:nvie/vim-flake8',
-              \         'github:davidhalter/jedi-vim',
               \         'github:Valloric/YouCompleteMe',
               \         'github:hynek/vim-python-pep8-indent',
               \         'github:ardagnir/united-front',
