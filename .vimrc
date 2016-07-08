@@ -33,7 +33,7 @@ set noswapfile
 set undofile
 
 
-" initialise formatting
+""" initialise formatting
 
 " Don't fold on start
 set nofoldenable
