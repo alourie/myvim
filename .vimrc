@@ -262,7 +262,7 @@ call SetupVAM()
 " experimental [E1]: load plugins lazily depending on filetype, See
 " NOTES
 " experimental [E2]: run after gui has been started (gvim) [3]
-" option1:  au VimEnter * call SetupVAM()
+" option1:  au VimEnter * call SetupVAM()""
 " option2:  au GUIEnter * call SetupVAM()
 " See BUGS sections below [*]
 " Vim 7.0 users see BUGS section [3]
